@@ -1,12 +1,44 @@
-## install
+# Install
 ```bash
-curl -s https://laravel.build/example-app | bash
-cd example-app
+curl -s https://laravel.build/sloflix | bash
+cd sloflix
 vendor/bin/sail up
 ```
 
+## Actualizar Tailwind
+```bash
+vendor/bin/sail npm i -D tailwindcss postcss autoprefixer
+```
 
-## database
+## Instalar Bootstrap
+```bash
+vendor/bin/sail composer require laravel/ui --dev
+vendor/bin/sail php artisan ui bootstrap
+vendor/bin/sail npm i
+```
+
+`resources/js/app.js`
+```javascript
+import '../css/app.css';
+import '../sass/app.scss';
+```
+
+## Iniciar servidor de desarrollo
+```bash
+vendor/bin/sail npm run dev
+```
+
+# Auth
+
+```bash
+vendor/bin/sail composer require laravel/breeze --dev
+vendor/bin/sail php artisan breeze:install
+
+```
+
+# Database
+
+## Definir modelo
 ```bash
 vendor/bin/sail php artisan make:model Movie --all
 ```` 
@@ -19,6 +51,7 @@ $table->string('plot');
 $table->string('poster');
 ```
 
+## Añadir 10 películas _fake_ de prueba
 `database/factories/MovieFactory.php`
 ```php
 return [
@@ -36,11 +69,18 @@ return [
     }
 ```
 
+## Aplicar cambios en la base de datos
 ```bash
 vendor/bin/sail php artisan migrate:fresh --seed`
 ```
 
-## list
+# Web 
+## Listar películas
+
+`routes/web.php`
+```php
+Route::get('/movies', [MovieController::class, 'index']);
+```
 
 `app/Http/Controllers/MovieController.php`
 
@@ -50,14 +90,9 @@ public function index() {
 }
 ```
 
-`routes/web.php`
-```php
-Route::get('/movies', [MovieController::class, 'index']);
-```
-
 `resources/view/movies/movies.blade.php`
 ```html
-<!DOCTYPE html>
+<x-app-layout>
 
 @forelse($movies as $movie)
 <div>
@@ -67,9 +102,16 @@ Route::get('/movies', [MovieController::class, 'index']);
 @empty
 <p>No hay pelis :()
 @endforelse
+</x-app-layout>
 ```
 
-## create
+## Crear película
+
+`routes/web.php`
+```php
+Route::get('/movies/create', [MovieController::class, 'create']);
+Route::post('/movies/create', [MovieController::class, 'store'])->name('storeMovie');
+```
 
 `app/Http/Controllers/MovieController.php`
 
@@ -100,7 +142,7 @@ Route::get('/movies', [MovieController::class, 'index']);
     }
 ```
 
-Guarda los ficheros subidos en la carpeta `storage/app/public`
+El método `storePublicly`Guarda los ficheros subidos en la carpeta `storage/app/public`
 
 `app/Http/Requests/StoreMovieRequest.php`
 ```php
@@ -118,7 +160,7 @@ Crea un enlace simbólico `public/storage --> storage/app/public`
 `resources/views/movies/create.blade.php`
 
 ```html
-<x-layout>
+<x-app-layout>
 <h1>Create Movie</h1>
 
 <form method="post" action={{ route('storeMovie') }} enctype="multipart/form-data">
@@ -137,5 +179,6 @@ Crea un enlace simbólico `public/storage --> storage/app/public`
 
 <input type="submit" value="Crear" />
 </form>
-</x-layout>
+</x-app-layout>
 ```
+

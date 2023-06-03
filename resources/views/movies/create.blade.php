@@ -1,4 +1,4 @@
-<x-layout>
+<x-app-layout>
 <h1>Create Movie</h1>
 
 <form method="post" action={{ route('storeMovie') }} enctype="multipart/form-data">
@@ -17,4 +17,4 @@
 
 <input type="submit" value="Crear" />
 </form>
-</x-layout>
+</x-app-layout>
