@@ -23,6 +23,9 @@ import '../css/app.css';
 import '../sass/app.scss';
 ```
 
+> **Note**
+> Algunes clases de tailwind i bootstrap colisionen, per exemple bg-white
+
 ## Iniciar servidor de desarrollo
 ```bash
 vendor/bin/sail npm run dev
