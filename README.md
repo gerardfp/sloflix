@@ -2,8 +2,22 @@
 ```bash
 curl -s https://laravel.build/sloflix | bash
 cd sloflix
+```
+Establecer el id de usuario y grupo que se usará en el contenedor:
+Añadir estas variables al fichero `.env`
+```
+printf "WWWUSER=$(id -u)\nWWWGROUP=$(id -g)\n" >> .env
+```
+
+```bash
 vendor/bin/sail up
 ```
+
+```bash
+vendor/bin/sail root-shell
+chown -R sail:sail .
+```
+
 
 ## Actualizar Tailwind
 ```bash
