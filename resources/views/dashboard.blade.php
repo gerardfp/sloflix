@@ -14,4 +14,5 @@
     @empty
     <p>No hay pelis :()
     @endforelse
+    
 </x-app-layout>
