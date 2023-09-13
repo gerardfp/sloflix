@@ -1,4 +1,4 @@
-<x-layout>
+<x-app-layout>
         <div>
             <a href="/movies/create">Add movie</a>
         </div>
@@ -11,4 +11,4 @@
         @empty
         <p>No hay pelis :()
         @endforelse
-    </x-layout>
+    </x-app-layout>
